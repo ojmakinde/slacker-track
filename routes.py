@@ -29,4 +29,4 @@ def goals_page(user):
 @app.route("/goals/<user>/<goal_id>")
 def goal_logs(user, goal_id):
     logs, goal_info = logic.get_goal_logs(database, goal_id)
-    return render_template('each_goal_page.html', logs=logs, goal_info=goal_info, user=user)
+    return render_template('logs_page.html', logs=logs, goal_info=goal_info, user=user)
