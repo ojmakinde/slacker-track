@@ -1,36 +1,75 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-</head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">SlackerTrack logo</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarText">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" href="goals">Goals</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" href="#">About</a>
-              </li>
-            </ul>
-            <span class="navbar-text">
-              Welcome, user
-            </span>
-          </div>
+{% extends "base.html" %}
+
+
+{% block title %}
+    Home
+{% endblock %}
+
+
+{% block user %}
+    {{user}}
+{% endblock %}
+
+
+
+{% block content %}
+
+<div class="container-fluid-lg mx-auto w-50">
+    <!-- ALL CONTENT GOES IN HERE -->
+    <h2 class="text-left mb-1"> Welcome, {{user}} </h2>
+    <i> Lorem ipsum Lorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsum</i>
+    <h3 class="text-left mb-2"> Current Goals </h3>
+    <!-- ADD JINJA FOR LOOP LOGIC IN HERE FOR CREATING AND ADDING THE ITEMS -->
+    {% for goal in goals %}
+    <div class="card mb-3">
+        <div class="card-body">
+            <h4 class="card-title"> {{goal['goal']}} </h4>
+            <h6 data-start-time="{{goal['start_time']}}" class="card-subtitle ms-auto text-muted"> countdown </h6>
+            <p class="card-text"> {{goal['description']}} </p>
         </div>
-      </nav>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-</body>
-</html>
+    </div>
+    {% endfor %}
+    <a href="/goals/{{user}}" class="d-flex justify-content-end text-right pb-2"> View more </a>
+    <h3 class="text-left mb-2"> Latest Logs </h3>
+    <!-- ADD JINJA -->
+    <div class="card mb-3">
+        <div class="card-body">
+            <h4 class="card-title"> log title </h4>
+            <h6 class="card-subtitle ms-auto text-muted"> date, time created </h6>
+            <p class="card-text"> Lorem ipsum Lorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsum em ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumsumLorem ipsum </p>
+            <!-- Maybe truncate some of the text at this point ? -->
+            <a href="#" class="btn btn-primary me-1"> Edit Log </a>
+            <a href="#" class="btn btn-primary"> Delete Log </a>
+        </div>
+    </div>
+    <div class="card mb-3">
+        <div class="card-body">
+            <h4 class="card-title"> log title </h4>
+            <h6 class="card-subtitle ms-auto text-muted"> date, time created </h6>
+            <p class="card-text"> Lorem ipsum Lorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsum em ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumsumLorem ipsum </p>
+            <!-- Maybe truncate some of the text at this point ? -->
+            <a href="#" class="btn btn-primary me-1"> Edit Log </a>
+            <a href="#" class="btn btn-primary"> Delete Log </a>
+        </div>
+    </div>
+    <div class="card mb-3">
+        <div class="card-body">
+            <h4 class="card-title"> log title </h4>
+            <h6 class="card-subtitle ms-auto text-muted"> date, time created </h6>
+            <p class="card-text"> Lorem ipsum Lorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsum em ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumsumLorem ipsum </p>
+            <!-- Maybe truncate some of the text at this point ? -->
+            <a href="#" class="btn btn-primary me-1"> Edit Log </a>
+            <a href="#" class="btn btn-primary"> Delete Log </a>
+        </div>
+    </div>
+    <h3> Daily Motivation </h3>
+    <p> Lorem ipsum Lorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsum em ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumsumLorem ipsumLorem ipsum Lorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsum em ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumsumLorem ipsum</p>
+</div>
+{% endblock %}
+
+{% block script %}
+{{ super() }}
+<script>
+    document.addEventListener('DOMContentLoaded', countdownTimer);
+</script>
+{% endblock %}
