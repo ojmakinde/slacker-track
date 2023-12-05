@@ -105,7 +105,9 @@ async function deleteLog(button) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         } else {
             console.log('LESSSGOOOOO');
-            // use modal for handling (un)successful deletion;
+            // use modal for showing successful deletion;
+            // maybe use an await?
+            parent.parentElement.style.display = "none";
         }
         
     } catch (error) {

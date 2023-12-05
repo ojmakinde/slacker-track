@@ -34,6 +34,5 @@ def goal_logs(user, goal_id):
 # create a route and call it in the js
 @app.route("/goals/<user>/<log_id>", methods=['POST'])
 def delete_log(user, log_id):
-    print (user, log_id)
     log = logic.delete_log(database, log_id)
     return (log)
