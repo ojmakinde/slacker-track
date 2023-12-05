@@ -55,10 +55,10 @@ function countdownTimer() {
     retrieve the values, and do the computation in here */
 
     // get every item with a start time attribute
-    var items = document.querySelectorAll('[data-start-time]')
+    var items = document.querySelectorAll('[data-start-time]');
     items.forEach(function (element) {
-        var start_time = element.getAttribute('data-start-time')
-        countdown(element, start_time)
+        var start_time = element.getAttribute('data-start-time');
+        countdown(element, start_time);
         setInterval(function(){
             countdown(element, start_time);
         }, 1000)
@@ -86,5 +86,29 @@ function truncateLog(button) {
     } else {
         logDescription.innerHTML = description_short;
         button.textContent = 'Show more';
+    }
+};
+
+async function deleteLog(button) {
+    var parent = button.parentElement;
+    var logParent = parent.previousElementSibling;
+    var user = logParent.getAttribute('data-user');
+    var logInfo = logParent.children[1];
+    var log_id = logInfo.getAttribute('data-log-id');
+    try {
+        const response = await fetch(`/goals/${user}/${log_id}`, {
+            method: 'POST'
+        })
+
+        if (!response.ok) {
+            console.log(response)
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        } else {
+            console.log('LESSSGOOOOO');
+            // use modal for handling (un)successful deletion;
+        }
+        
+    } catch (error) {
+        prompt(error);
     }
 };

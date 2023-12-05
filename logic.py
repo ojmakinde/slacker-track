@@ -41,6 +41,9 @@ def delete_log(db, log_id):
             .delete() \
             .eq('id', f'{log_id}') \
             .execute() \
+            .data
+
+    return (log)
 
 # def get_user_logs():
 #     # so here, i would select from logs, where log id is the current id and user is the correct user

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, redirect, url_for, jsonify
 from supabase import Client, create_client
 import os
 import logic
@@ -32,7 +32,8 @@ def goal_logs(user, goal_id):
     return render_template('logs_page.html', logs=logs, goal_info=goal_info, user=user)
 
 # create a route and call it in the js
-@app.route("/goals/<user>/<log_id>")
+@app.route("/goals/<user>/<log_id>", methods=['POST'])
 def delete_log(user, log_id):
-    log = logic.delete_log(log_id)
-    return redirect(f"/goals/{user}")
+    print (user, log_id)
+    log = logic.delete_log(database, log_id)
+    return (log)

@@ -21,7 +21,7 @@
             Truncate the text at maybe... 160 ? If there's more add a modal on, if not, don't. 
             Also, using cards would be nice, I think. -->
         <div class="card mb-3">
-            <div class="card-body">
+            <div class="card-body" data-user="{{user}}">
                 <h4 class="card-title"> {{log['log']}} </h4>
                 <h6 data-log-date="{{log['created_at']}}" data-log-id="{{log['id']}}" 
                 class="card-subtitle ms-auto text-muted"> Created at: </h6>
@@ -35,7 +35,7 @@
             <div class="card-footer">
                 <!-- CREATE A NEW ROUTE FOR EDITING. CALL THE ROUTE FOR DELETING. -->
                 <button class="btn btn-primary btn-sm me-1" action=""> Edit Log </button>
-                <button class="btn btn-danger btn-sm" action=""> Delete Log </button>
+                <button class="btn btn-danger btn-sm" onclick="deleteLog(this)"> Delete Log </button>
             </div>
                 
                 
