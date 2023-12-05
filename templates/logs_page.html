@@ -25,11 +25,9 @@
                 <h4 class="card-title"> {{log['log']}} </h4>
                 <h6 data-log-date="{{log['created_at']}}" data-log-id="{{log['id']}}" 
                 class="card-subtitle ms-auto text-muted"> Created at: </h6>
-
                 <p class="card-text mb-1" data-shortened="{{ log['description'] | truncate(160) }}" 
                 data-long="{{ log['description'] }}">{{log['description'] | truncate(160)}}</p>
 
-                <!-- GET THE P TAG ON CLICK FOR THE SPAN. -->
                 {% if log['description'] != log['description'] | truncate(160) %}
                 <span class="card-text mb-1" style="color: blue;" onclick="truncateLog(this)"> Show more </span>
                 {% endif %}
