@@ -23,11 +23,25 @@
         <div class="card mb-3">
             <div class="card-body">
                 <h4 class="card-title"> {{log['log']}} </h4>
-                <h6 data-log-date="{{log['created_at']}}" class="card-subtitle ms-auto text-muted"> Created at: </h6>
-                <p class="card-text mb-1"> {{log['description'] | truncate(160)}} </p>
-                <a href="#" class="btn btn-primary me-1"> Edit Log </a>
-                <a href="#" class="btn btn-danger"> Delete Log </a>
+                <h6 data-log-date="{{log['created_at']}}" data-log-id="{{log['id']}}" 
+                class="card-subtitle ms-auto text-muted"> Created at: </h6>
+
+                <p class="card-text mb-1" data-shortened="{{ log['description'] | truncate(160) }}" 
+                data-long="{{ log['description'] }}">{{log['description'] | truncate(160)}}</p>
+
+                <!-- GET THE P TAG ON CLICK FOR THE SPAN. -->
+                {% if log['description'] != log['description'] | truncate(160) %}
+                <span class="card-text mb-1" style="color: blue;" onclick="truncateLog(this)"> Show more </span>
+                {% endif %}
             </div>
+            <div class="card-footer">
+                <!-- CREATE A NEW ROUTE FOR EDITING. CALL THE ROUTE FOR DELETING. -->
+                <button class="btn btn-primary btn-sm me-1" action=""> Edit Log </button>
+                <button class="btn btn-danger btn-sm" action=""> Delete Log </button>
+            </div>
+                
+                
+                
         </div>
         {% endfor %}
         
