@@ -74,3 +74,17 @@ function setLogDate() {
         element.innerHTML = element.innerHTML + date + ", " + time;
     })
 }
+
+function truncateLog(button) {
+    var logDescription = button.previousElementSibling;
+    var description_short = logDescription.getAttribute('data-shortened');
+    var description_long = logDescription.getAttribute('data-long');
+
+    if (logDescription.textContent.trim() === description_short.trim()) {
+        logDescription.innerHTML = description_long;
+        button.textContent = 'Show less';
+    } else {
+        logDescription.innerHTML = description_short;
+        button.textContent = 'Show more';
+    }
+};
