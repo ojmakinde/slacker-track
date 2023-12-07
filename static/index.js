@@ -1,11 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const deleteButton = document.getElementById('ModalDeleteButton');
-    deleteButton.addEventListener('show.bs.modal', deleteLog);
-
-    //use one event listener on show.bs.modal to affix the attribute to delete button
-
-    // use another to handle what happens when the delete button is clicked
-});
+var id_stack = []
 
 function userAuth(){
     /* use the same func to handle login/sign up user auth.
@@ -98,16 +91,27 @@ function truncateLog(button) {
     }
 };
 
-async function deleteLog(event) {
-    const button = event.relatedTarget;
-    console.log(button)
-    const log_id = button.getAttribute('data-log-id');
+function add_id(button){
+    id_stack.push(button.getAttribute('data-log-id'));
+}
+
+async function deleteLog(button) {
+    if (!id_stack) {
+        throw new Error('Cannot find log!') 
+    }
+
+    if (button.getAttribute('data-purpose') == "clear"){
+        id_stack.pop();
+        return;
+    }
+
+    log_id = id_stack[0];
     const logInfo = document.getElementById(log_id);
     const user = logInfo.parentElement.getAttribute('data-user');
-    const outer_card = logInfo.parentElement.parentElement;
+    const logCard = logInfo.parentElement.parentElement;
 
-    /* So the card is getting deleted because the event listener
-    is firing on click for the delete button */ 
+    id_stack.pop();
+
     try {
         const response = await fetch(`/goals/${user}/${log_id}`, {
             method: 'POST'
@@ -119,7 +123,7 @@ async function deleteLog(event) {
             console.log('LESSSGOOOOO');
             // use modal for showing successful deletion;
             // maybe use an await?
-            outer_card.style.display = "none";
+            logCard.style.display = "none";
         }
         
     } catch (error) {
