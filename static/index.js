@@ -1,3 +1,5 @@
+var id_stack = []
+
 function userAuth(){
     /* use the same func to handle login/sign up user auth.
     have the default id be "login". if the user wants to
@@ -55,10 +57,10 @@ function countdownTimer() {
     retrieve the values, and do the computation in here */
 
     // get every item with a start time attribute
-    var items = document.querySelectorAll('[data-start-time]')
+    var items = document.querySelectorAll('[data-start-time]');
     items.forEach(function (element) {
-        var start_time = element.getAttribute('data-start-time')
-        countdown(element, start_time)
+        var start_time = element.getAttribute('data-start-time');
+        countdown(element, start_time);
         setInterval(function(){
             countdown(element, start_time);
         }, 1000)
@@ -86,5 +88,45 @@ function truncateLog(button) {
     } else {
         logDescription.innerHTML = description_short;
         button.textContent = 'Show more';
+    }
+};
+
+function add_id(button){
+    id_stack.push(button.getAttribute('data-log-id'));
+}
+
+async function deleteLog(button) {
+    if (!id_stack) {
+        throw new Error('Cannot find log!') 
+    }
+
+    if (button.getAttribute('data-purpose') == "clear"){
+        id_stack.pop();
+        return;
+    }
+
+    log_id = id_stack[0];
+    const logInfo = document.getElementById(log_id);
+    const user = logInfo.parentElement.getAttribute('data-user');
+    const logCard = logInfo.parentElement.parentElement;
+
+    id_stack.pop();
+
+    try {
+        const response = await fetch(`/goals/${user}/${log_id}`, {
+            method: 'POST'
+        })
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        } else {
+            console.log('LESSSGOOOOO');
+            // use modal for showing successful deletion;
+            // maybe use an await?
+            logCard.style.display = "none";
+        }
+        
+    } catch (error) {
+        prompt(error);
     }
 };

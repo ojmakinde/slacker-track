@@ -17,6 +17,9 @@ def get_user_goals_goals_page(db, username):
     
     return (goals)
 
+    # also, add way to limit goals to 10 per page, and add logic for multiple pages.
+    # slick enhancements: a way to sort goals and a way to search for them
+
 def get_goal_logs(db, goal_id):
     logs = db.table('logs') \
             .select('*') \
@@ -33,12 +36,14 @@ def get_goal_logs(db, goal_id):
 
     return (logs, goal_info)
 
-# def get_user_goals_goals_page():
-#     # get all goals ? we would need some Jinja logic for keeping goals limited to 10 per page
+def delete_log(db, log_id):
+    log = db.table('logs') \
+            .delete() \
+            .eq('id', f'{log_id}') \
+            .execute() \
+            .data
 
-#     # also, a sort-by dropdown for AJAX calls would be nice
-
-#     # lastly, a search bar? (would be rather interesting)
+    return (log)
 
 # def get_user_logs():
 #     # so here, i would select from logs, where log id is the current id and user is the correct user

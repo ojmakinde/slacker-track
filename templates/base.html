@@ -5,24 +5,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/style.css">
     <title>{% block title %}{% endblock %} - SlackerTrack </title>
     {% endblock %}
 </head>
 <body>
-    <!-- NAV BAR -->
+
     <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">SlackerTrack logo</a>
+          <a class="navbar-brand">SlackerTrack logo</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/home">Home</a>
+                <a class="nav-link active" aria-current="page" href="/home/{{user}}">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" href="/goals">Goals</a>
+                <a class="nav-link active" href="/goals/{{user}}">Goals</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link active" href="/about">About</a>
@@ -36,9 +37,9 @@
       </nav>
 
       {% block content %}{% endblock %}
-    <!-- I want this at the bottom -->
+
     
-    <div class="container-fluid"><a class="fixed-bottom fixed-end btn btn-primary btn-sm ms-auto m-3" style="width: 6%; height: 5%"> Add log </a></div>
+    <button class="float-end fixed-bottom float-end btn btn-primary btn-sm ms-auto m-3" style="position: fixed; right: 0; bottom: 0; z-index: 1030; left: 94vw"> Add log </button>
     {% block script %}
     <script src="../static/index.js"></script>
     {% endblock %}
