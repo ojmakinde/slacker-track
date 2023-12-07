@@ -1,3 +1,12 @@
+document.addEventListener('DOMContentLoaded', () => {
+    const deleteButton = document.getElementById('ModalDeleteButton');
+    deleteButton.addEventListener('show.bs.modal', deleteLog);
+
+    //use one event listener on show.bs.modal to affix the attribute to delete button
+
+    // use another to handle what happens when the delete button is clicked
+});
+
 function userAuth(){
     /* use the same func to handle login/sign up user auth.
     have the default id be "login". if the user wants to
@@ -89,25 +98,28 @@ function truncateLog(button) {
     }
 };
 
-async function deleteLog(button) {
-    var parent = button.parentElement;
-    var logParent = parent.previousElementSibling;
-    var user = logParent.getAttribute('data-user');
-    var logInfo = logParent.children[1];
-    var log_id = logInfo.getAttribute('data-log-id');
+async function deleteLog(event) {
+    const button = event.relatedTarget;
+    console.log(button)
+    const log_id = button.getAttribute('data-log-id');
+    const logInfo = document.getElementById(log_id);
+    const user = logInfo.parentElement.getAttribute('data-user');
+    const outer_card = logInfo.parentElement.parentElement;
+
+    /* So the card is getting deleted because the event listener
+    is firing on click for the delete button */ 
     try {
         const response = await fetch(`/goals/${user}/${log_id}`, {
             method: 'POST'
         })
 
         if (!response.ok) {
-            console.log(response)
             throw new Error(`HTTP error! Status: ${response.status}`);
         } else {
             console.log('LESSSGOOOOO');
             // use modal for showing successful deletion;
             // maybe use an await?
-            parent.parentElement.style.display = "none";
+            outer_card.style.display = "none";
         }
         
     } catch (error) {
