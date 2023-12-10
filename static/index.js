@@ -1,4 +1,5 @@
-var id_stack = []
+var id_stack_delete = []
+var id_stack_edit = []
 
 function userAuth(){
     /* use the same func to handle login/sign up user auth.
@@ -78,9 +79,9 @@ function setLogDate() {
 }
 
 function truncateLog(button) {
-    var logDescription = button.previousElementSibling;
-    var description_short = logDescription.getAttribute('data-shortened');
-    var description_long = logDescription.getAttribute('data-long');
+    const logDescription = button.previousElementSibling;
+    const description_short = logDescription.getAttribute('data-shortened');
+    const description_long = logDescription.getAttribute('data-long');
 
     if (logDescription.textContent.trim() === description_short.trim()) {
         logDescription.innerHTML = description_long;
@@ -91,38 +92,96 @@ function truncateLog(button) {
     }
 };
 
-function add_id(button){
-    id_stack.push(button.getAttribute('data-log-id'));
+
+
+function add_id_edit(button){
+    id_stack_edit.push(button.getAttribute('data-log-id'));
 }
 
-async function deleteLog(button) {
-    if (!id_stack) {
+function populateEditModal(button){
+    add_id_edit(button);
+    const log_object = document.getElementById(button.getAttribute('data-log-id'));
+    const log_title = log_object.previousElementSibling.textContent;
+    const log_description = log_object.nextElementSibling.getAttribute('data-long');
+    document.getElementById('log_title').value = log_title;
+    document.getElementById('log_description').innerHTML = log_description;
+}
+
+async function saveEditLog(button){
+    if (!id_stack_edit) {
         throw new Error('Cannot find log!') 
     }
 
     if (button.getAttribute('data-purpose') == "clear"){
-        id_stack.pop();
+        id_stack_edit.pop();
         return;
     }
 
-    log_id = id_stack[0];
+    const log_id = id_stack_edit[0];
+    
+    const user = document.getElementById(log_id).parentElement.getAttribute('data-user');
+
+    id_stack_edit.pop();
+    
+    const form = new FormData();
+    form.append('action', 'edit');
+
+    const log_title = document.getElementById('log_title').value;
+    const log_description = document.getElementById('log_description').value;
+    form.append('title', log_title);
+    form.append('description', log_description);
+
+    try {
+        const response = await fetch(`/goals/${user}/${log_id}`, {
+            method: 'POST',
+            body: form
+        })
+
+        if (!response.ok) {
+            alert(`HTTP Error: ${response.status}`);
+        } else {
+            alert(`Edit successful!`)
+        }
+        
+    } catch (error) {
+        alert(error);
+    }
+}
+
+function add_id_delete(button){
+    id_stack_delete.push(button.getAttribute('data-log-id'));
+}
+
+async function deleteLog(button) {
+    if (!id_stack_delete) {
+        alert(`Unexpected error encountered.`) 
+    }
+
+    if (button.getAttribute('data-purpose') == "clear"){
+        id_stack_delete.pop();
+        return;
+    }
+
+    const log_id = id_stack_delete[0];
     const logInfo = document.getElementById(log_id);
     const user = logInfo.parentElement.getAttribute('data-user');
     const logCard = logInfo.parentElement.parentElement;
 
-    id_stack.pop();
+    id_stack_delete.pop();
+
+    const form = new FormData();
+    form.append('action', 'delete');
 
     try {
         const response = await fetch(`/goals/${user}/${log_id}`, {
-            method: 'POST'
+            method: 'POST',
+            body: form
         })
 
         if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
+            alert(`HTTP Error: ${response.status}`);
         } else {
-            console.log('LESSSGOOOOO');
-            // use modal for showing successful deletion;
-            // maybe use an await?
+            alert('Log successfully deleted.');
             logCard.style.display = "none";
         }
         

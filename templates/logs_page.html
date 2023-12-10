@@ -34,15 +34,45 @@
             </div>
             <div class="card-footer">
                 <!-- CREATE A NEW ROUTE FOR EDITING. CALL THE ROUTE FOR DELETING. -->
-                <button class="btn btn-primary btn-sm me-1" data-log-id="{{log['id']}}"> Edit Log </button>
+                <button class="btn btn-primary btn-sm me-1" data-log-id="{{log['id']}}" data-bs-toggle="modal"
+                data-bs-target="#editModal" onclick="populateEditModal(this)" > Edit Log </button>
                 <button class="btn btn-danger btn-sm" data-log-id="{{log['id']}}" data-bs-toggle="modal" 
-                data-bs-target="#deleteModal" onclick="add_id(this)"> Delete Log </button>
+                data-bs-target="#deleteModal" onclick="add_id_delete(this)"> Delete Log </button>
             </div>
                 
                             
                 
         </div>
         {% endfor %}
+
+        <div class="modal fade" id="editModal" tabindex="-1">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Log</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form id="editModalForm" >
+                  <div class="mb-3">
+                    <label for="log_title" class="col-form-label">Title</label>
+                    <input type="text" class="form-control" id="log_title">
+                  </div>
+                  <div class="mb-3">
+                    <label for="log_description" class="col-form-label">Description</label>
+                    <textarea class="form-control" id="log_description"></textarea>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-purpose="clear">Close</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="saveEditLog(this)">Save changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- So, when the user clicks the modal, -->
 
         <div class="modal fade" id="deleteModal" tabindex="-1" data-bs-backdrop="static">
             <div class="modal-dialog modal-dialog-centered">

@@ -45,7 +45,12 @@ def delete_log(db, log_id):
 
     return (log)
 
-# def get_user_logs():
-#     # so here, i would select from logs, where log id is the current id and user is the correct user
+def edit_log(db, log_id, new_title, new_description):
+    log = db.table('logs') \
+            .update({'log': f'{new_title}',
+                     'description': f'{new_description}'}) \
+            .eq('id', f'{log_id}') \
+            .execute() \
+            .data
 
-#     # i would need a get log, update log, delete log.
+    return (log)
