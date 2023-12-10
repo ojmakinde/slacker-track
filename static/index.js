@@ -154,7 +154,7 @@ function add_id_delete(button){
 
 async function deleteLog(button) {
     if (!id_stack_delete) {
-        throw new Error('Cannot find log!') 
+        alert(`Unexpected error encountered.`) 
     }
 
     if (button.getAttribute('data-purpose') == "clear"){
