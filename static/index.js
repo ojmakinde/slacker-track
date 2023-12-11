@@ -10,15 +10,6 @@ function userAuth(){
 
 function countdown(element, start_time, end_time = null) {
 
-    /* This would need a few parameters, including:
-    - start time
-    - end time
-    - id of time slot to be worked with. we can simply pass that in with this.id as a parameter
-    - then, we get the current time, compute the calculation, and return that.
-    */
-
-    // building placeholder going from past time to present time.
-
     var start = new Date(start_time);
     if (end_time == null){
         var end = new Date().getTime();
@@ -45,7 +36,9 @@ function countdown(element, start_time, end_time = null) {
     }
     countdownString += seconds + ' seconds';
 
-    element.innerHTML = countdownString;
+    element.innerHTML = countdownString + 'since creation';
+
+    // Unfortunately, the logic for dealing with end times could not be implemented with the time left.
 };
 
 function countdownTimer() {

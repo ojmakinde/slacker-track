@@ -1,3 +1,13 @@
+def verify(db, username, password):
+    status = db.table('users') \
+               .select('username, password') \
+               .eq('username', f'{username}') \
+               .eq('password', f'{password}') \
+               .execute() \
+               .data
+    
+    return (status)
+
 def get_max_id(db, table):
     id = db.table(f'{table}') \
            .select('id') \

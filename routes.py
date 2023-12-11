@@ -12,6 +12,21 @@ database: Client = create_client(os.environ.get("SUPABASE_URL"), os.environ.get(
 def auth_page():
     return render_template('auth_page.html')
 
+@app.route("/authentication", methods=['POST'])
+def handle_log(username, password):
+    username = request.form.get('username')
+    password = request.form.get('password')
+
+    verification = logic.verify(db, username, password)
+    action = request.form.get('action')
+    if action == 'delete':
+        log = logic.delete_log(database, log_id)
+    elif action == 'edit':
+        title, description = request.form.get('title'), request.form.get('description')
+        log = logic.edit_log(database, log_id, title, description)
+
+    return (log)
+
 @app.route("/home/<user>")
 def landing_page(user):
     # write an auth function? or a way to ensure people log in before viewing this page.
