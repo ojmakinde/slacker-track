@@ -124,7 +124,6 @@ async function addLog() {
     var description = document.getElementById('new_description').value;
     var info = document.getElementById('info_span');
     var goal_id = info.getAttribute('data-goal-id');
-    console.log(goal_id)
 
     logInfo.append('title', title);
     logInfo.append('description', description);

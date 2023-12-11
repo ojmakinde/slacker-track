@@ -98,3 +98,10 @@
       </div>
 </div>
 {% endblock %}
+
+{% block script %}
+{{ super() }}
+<script>
+    document.addEventListener('DOMContentLoaded', countdownTimer);
+</script>
+{% endblock %}
