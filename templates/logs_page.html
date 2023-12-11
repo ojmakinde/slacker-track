@@ -17,9 +17,6 @@
     <p class="text-mute mb-2"> {{goal_info['description']}} </p>
     {% if logs %}
         {% for log in logs %}
-        <!-- So, for each log, use a modal to show all the text, cuz logs could be long. 
-            Truncate the text at maybe... 160 ? If there's more add a modal on, if not, don't. 
-            Also, using cards would be nice, I think. -->
         <div class="card mb-3">
             <div class="card-body" data-user="{{user}}">
                 <h4 class="card-title"> {{log['log']}} </h4>
@@ -33,7 +30,6 @@
                 {% endif %}
             </div>
             <div class="card-footer">
-                <!-- CREATE A NEW ROUTE FOR EDITING. CALL THE ROUTE FOR DELETING. -->
                 <button class="btn btn-primary btn-sm me-1" data-log-id="{{log['id']}}" data-bs-toggle="modal"
                 data-bs-target="#editModal" onclick="populateEditModal(this)" > Edit Log </button>
                 <button class="btn btn-danger btn-sm" data-log-id="{{log['id']}}" data-bs-toggle="modal" 
@@ -49,7 +45,7 @@
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
               <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Log</h1>
+                <h1 class="modal-title fs-5">Edit Log</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
@@ -72,8 +68,6 @@
           </div>
         </div>
 
-        <!-- So, when the user clicks the modal, -->
-
         <div class="modal fade" id="deleteModal" tabindex="-1" data-bs-backdrop="static">
             <div class="modal-dialog modal-dialog-centered">
               <div class="modal-content">
@@ -87,7 +81,6 @@
                 <div class="modal-footer">
                   <button type="button" data-purpose="clear" class="btn btn-secondary" data-bs-dismiss="modal" onclick="deleteLog(this)"> Cancel </button>
                   <button type="button" id="ModalDeleteButton" class="btn btn-danger" data-bs-dismiss="modal" onclick="deleteLog(this)"> Delete Log </button>
-                  <!-- Add a flash message here for successful deletion -->
                 </div>
               </div>
             </div>

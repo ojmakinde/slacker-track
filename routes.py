@@ -1,4 +1,5 @@
 from flask import Flask, request, render_template, redirect, url_for, jsonify
+from datetime import datetime
 from supabase import Client, create_client
 import os
 import logic
@@ -26,6 +27,21 @@ def goals_page(user):
     goals = logic.get_user_goals_goals_page(database, f'{user}')
     return render_template('goals_page.html', goals=goals, user=user)
 
+@app.route("/create_goal/<user>", methods=['POST'])
+def create_goal(user):
+    goal = request.form.get('title')
+    description = request.form.get('description')
+    start_date = request.form.get('start_date')
+    start_date = datetime.strptime(start_date, "%Y-%m-%dT%H:%M")
+    end_date = request.form.get('end_date')
+    if end_date:
+        end_date = datetime.strptime(end_date, "%Y-%m-%dT%H:%M")
+        goal = logic.create_goal_end_date(database, user, goal, description, start_date, end_date)
+        return (goal)
+    goal = logic.create_goal(database, user, goal, description, start_date)
+    
+    return (goal)
+
 @app.route("/goals/<user>/<goal_id>")
 def goal_logs(user, goal_id):
     logs, goal_info = logic.get_goal_logs(database, goal_id)
@@ -40,4 +56,5 @@ def handle_log(user, log_id):
     elif action == 'edit':
         title, description = request.form.get('title'), request.form.get('description')
         log = logic.edit_log(database, log_id, title, description)
+
     return (log)
