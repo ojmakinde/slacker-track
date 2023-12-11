@@ -15,11 +15,9 @@
 {% block content %}
 
 <div class="container-fluid-lg mx-auto w-50">
-    <!-- ALL CONTENT GOES IN HERE -->
     <h2 class="text-left mb-1"> Welcome, {{user}} </h2>
-    <i> Lorem ipsum Lorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsum</i>
+    <p> Let's conquer procrastination today! </p>
     <h3 class="text-left mb-2"> Current Goals </h3>
-    <!-- ADD JINJA FOR LOOP LOGIC IN HERE FOR CREATING AND ADDING THE ITEMS -->
     {% for goal in goals %}
     <div class="card mb-3">
         <div class="card-body">
@@ -28,42 +26,18 @@
             <p class="card-text"> {{goal['description']}} </p>
         </div>
     </div>
+    
     {% endfor %}
+
+    {% if goals %}
     <a href="/goals/{{user}}" class="d-flex justify-content-end text-right pb-2"> View more </a>
-    <h3 class="text-left mb-2"> Latest Logs </h3>
-    <!-- ADD JINJA -->
-    <div class="card mb-3">
-        <div class="card-body">
-            <h4 class="card-title"> log title </h4>
-            <h6 class="card-subtitle ms-auto text-muted"> date, time created </h6>
-            <p class="card-text"> Lorem ipsum Lorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsum em ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumsumLorem ipsum </p>
-            <!-- Maybe truncate some of the text at this point ? -->
-            <a href="#" class="btn btn-primary me-1"> Edit Log </a>
-            <a href="#" class="btn btn-primary"> Delete Log </a>
-        </div>
-    </div>
-    <div class="card mb-3">
-        <div class="card-body">
-            <h4 class="card-title"> log title </h4>
-            <h6 class="card-subtitle ms-auto text-muted"> date, time created </h6>
-            <p class="card-text"> Lorem ipsum Lorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsum em ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumsumLorem ipsum </p>
-            <!-- Maybe truncate some of the text at this point ? -->
-            <a href="#" class="btn btn-primary me-1"> Edit Log </a>
-            <a href="#" class="btn btn-primary"> Delete Log </a>
-        </div>
-    </div>
-    <div class="card mb-3">
-        <div class="card-body">
-            <h4 class="card-title"> log title </h4>
-            <h6 class="card-subtitle ms-auto text-muted"> date, time created </h6>
-            <p class="card-text"> Lorem ipsum Lorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsum em ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumsumLorem ipsum </p>
-            <!-- Maybe truncate some of the text at this point ? -->
-            <a href="#" class="btn btn-primary me-1"> Edit Log </a>
-            <a href="#" class="btn btn-primary"> Delete Log </a>
-        </div>
-    </div>
+    {% else %}
+    <h5> You do not have any goals :( </h5>
+    <p> (Navigate to 'Goals' on the navigation bar to add goals) </p>
+    {% endif %}
+
     <h3> Daily Motivation </h3>
-    <p> Lorem ipsum Lorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsum em ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumsumLorem ipsumLorem ipsum Lorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsum em ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumsumLorem ipsum</p>
+    <p> You've got this. </p>
 </div>
 {% endblock %}
 

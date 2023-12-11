@@ -68,6 +68,55 @@ function countdownTimer() {
 })
 };
 
+function validateAndSubmit(){
+    const form = document.getElementById('newGoalForm');
+    if (form.checkValidity()){
+        if (document.getElementById('hasEnd').checked){
+                createGoal('has_end');
+                return;
+        }
+        createGoal()
+    } else {
+        alert('Please ensure all fields are correctly filled.')
+    }
+}
+
+async function createGoal(status=null) {
+    var goalInfo = new FormData();
+    var user = document.getElementById('user_span').getAttribute('data-user');
+    var title = document.getElementById('goal_title').value;
+    var description = document.getElementById('goal_description').value;
+    var start_date = document.getElementById('start_date').value;
+    var end_date = document.getElementById('end_date').value;
+
+    goalInfo.append('title', title);
+    goalInfo.append('description', description);
+    goalInfo.append('start_date', start_date);
+
+    if (status === 'has_end'){
+        goalInfo.append('end_date', end_date);
+    }
+    try {
+        const response = await fetch(`/create_goal/${user}`, {
+            method: 'POST',
+            body: goalInfo
+        })
+
+        if (!response.ok){
+            alert (`HTTP Error: ${response.status}`);
+            return;
+        }
+
+        response.json().then(responseData => {
+            const new_id = responseData[0]['id']
+            window.location.href = `/goals/${user}/${new_id}`
+        })
+
+    } catch (error) {
+        alert (error);
+    }
+}
+
 function setLogDate() {
     var logs = document.querySelectorAll('[data-log-date]');
     logs.forEach(function (element) {
@@ -139,6 +188,7 @@ async function saveEditLog(button){
 
         if (!response.ok) {
             alert(`HTTP Error: ${response.status}`);
+            return;
         } else {
             alert(`Edit successful!`)
         }
