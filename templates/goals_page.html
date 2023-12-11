@@ -26,7 +26,7 @@
             <p class="card-text mb-1"> {{goal['description']}} </p>
         </div>
         <div class="card-footer">
-            <button href="/goals/{{goal['username']}}/{{goal['id']}}" class="btn btn-primary btn-sm me-1"> View Logs </button>
+            <a href="/goals/{{goal['username']}}/{{goal['id']}}" class="btn btn-primary btn-sm me-1"> View Logs </a>
             <button href="#" class="btn btn-danger btn-sm" data-bs-target="#deleteModal" data-bs-toggle="modal"> Delete Goal </a>
         </div>
     </div>
