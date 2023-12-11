@@ -15,6 +15,8 @@
 <div class="container-fluid-lg mx-auto w-50">
     <h2 class="text-left mb-1"> {{goal_info['goal']}} </h2>
     <p class="text-mute mb-2"> {{goal_info['description']}} </p>
+    <button id='goal_id' class="btn btn-primary btn-sm mb-2" data-bs-toggle="modal" data-bs-target="#addLog"> Add Log </button>
+    <span id="info_span" data-goal-id="{{goal_info['id']}}"> </span>
     {% if logs %}
         {% for log in logs %}
         <div class="card mb-3">
@@ -41,6 +43,8 @@
         </div>
         {% endfor %}
 
+        <!-- MODALS -->
+
         <div class="modal fade" id="editModal" tabindex="-1">
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -61,7 +65,7 @@
                 </form>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-purpose="clear">Close</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-purpose="clear" onclick="saveEditLog(this)">Close</button>
                 <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="saveEditLog(this)">Save changes</button>
               </div>
             </div>
@@ -72,7 +76,7 @@
             <div class="modal-dialog modal-dialog-centered">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel"> Delete Log </h5>
+                  <h5 class="modal-title"> Delete Log </h5>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -81,6 +85,33 @@
                 <div class="modal-footer">
                   <button type="button" data-purpose="clear" class="btn btn-secondary" data-bs-dismiss="modal" onclick="deleteLog(this)"> Cancel </button>
                   <button type="button" id="ModalDeleteButton" class="btn btn-danger" data-bs-dismiss="modal" onclick="deleteLog(this)"> Delete Log </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal fade" id="addLog" tabindex="-1" data-bs-backdrop="static">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5">Add New Log</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <form id="newLogForm" novalidate>
+                    <div class="mb-3">
+                      <label for="new_title" class="col-form-label">Title</label>
+                      <input type="text" class="form-control" id="new_title" required>
+                    </div>
+                    <div class="mb-3">
+                      <label for="new_description" class="col-form-label">Description</label>
+                      <input class="form-control" id="new_description" required>
+                    </div>   
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-purpose="clear">Close</button>
+                  <button type="button" class="btn btn-primary" id="createButton" data-bs-dismiss="" onclick="addLog()">Create Log</button>
                 </div>
               </div>
             </div>

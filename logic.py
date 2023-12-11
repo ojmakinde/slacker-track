@@ -1,5 +1,5 @@
-def get_max_id(db):
-    id = db.table('goals') \
+def get_max_id(db, table):
+    id = db.table(f'{table}') \
            .select('id') \
            .order('id', desc=True) \
            .limit(1) \
@@ -9,7 +9,7 @@ def get_max_id(db):
     return (id)
 
 def create_goal_end_date(db, username, new_goal, new_description, start_date, end_date):
-    max_id = get_max_id(db)
+    max_id = get_max_id(db, 'goals')
     goal = db.table('goals') \
              .insert({'id': max_id + 1,
                       'username': f'{username}',
@@ -79,16 +79,23 @@ def get_goal_logs(db, goal_id):
             .data
 
     goal_info = db.table('goals') \
-                .select('goal, description') \
+                .select('id, goal, description') \
                 .eq('id', f'{goal_id}') \
                 .execute() \
                 .data[0]
 
     return (logs, goal_info)
 
-def add_log(db, log_id):
-    log = None
-    
+def add_log(db, new_title, new_description, goal_id):
+    max_id = get_max_id(db, 'logs')
+    log = db.table('logs') \
+             .insert({'id': max_id + 1,
+                      'log': f'{new_title}',
+                      'description': f'{new_description}', 
+                      'goal_id': f'{goal_id}'}) \
+             .execute() \
+             .data
+
     return (log)
 
 def delete_log(db, log_id):

@@ -58,3 +58,14 @@ def handle_log(user, log_id):
         log = logic.edit_log(database, log_id, title, description)
 
     return (log)
+
+@app.route("/add_log/<log_id>", methods=['POST'])
+def new_log(log_id):
+    title, description = request.form.get('title'), request.form.get('description')
+    goal_id = request.form.get('goal_id')
+    print(title, description, 'bwawawa')
+    log = logic.add_log(database, title, description, goal_id)
+    # timestamp for logs will default to current time, for now.
+
+
+    return (log)

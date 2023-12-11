@@ -18,25 +18,21 @@ function countdown(element, start_time, end_time = null) {
     */
 
     // building placeholder going from past time to present time.
-    if (end_time == null){
 
-    }
     var start = new Date(start_time);
-    var now = new Date().getTime();
-    var timeleft = start - now;
-        
+    if (end_time == null){
+        var end = new Date().getTime();
+    } else {
+        var end = new Date(end_time).getTime();
+    }    
+    var timeleft = start - end;
     timeleft = Math.abs(timeleft);
     // Calculating the days, hours, minutes and seconds left
     var days = Math.floor(timeleft / (1000 * 60 * 60 * 24));
     var hours = Math.floor((timeleft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     var minutes = Math.floor((timeleft % (1000 * 60 * 60)) / (1000 * 60));
     var seconds = Math.floor((timeleft % (1000 * 60)) / 1000);
-        
-    // Result is output to the specific element
-    // element.innerHTML = `${days}:${hours}:${minutes}:${seconds}`
-    // Display the message when countdown is over
 
-    // Build the countdown string in the desired format
     var countdownString = '';
     if (days > 0) {
         countdownString += days + ' days, ';
@@ -49,7 +45,6 @@ function countdown(element, start_time, end_time = null) {
     }
     countdownString += seconds + ' seconds';
 
-    // Result is output to the specific element
     element.innerHTML = countdownString;
 };
 
@@ -111,6 +106,42 @@ async function createGoal(status=null) {
             const new_id = responseData[0]['id']
             window.location.href = `/goals/${user}/${new_id}`
         })
+
+    } catch (error) {
+        alert (error);
+    }
+}
+
+async function addLog() {
+    const form = document.getElementById('newLogForm');
+    if (!form.checkValidity()){
+        alert('Please ensure fields are correctly filled.')
+        return;
+    }
+
+    var logInfo = new FormData();
+    var title = document.getElementById('new_title').value;
+    var description = document.getElementById('new_description').value;
+    var info = document.getElementById('info_span');
+    var goal_id = info.getAttribute('data-goal-id');
+    console.log(goal_id)
+
+    logInfo.append('title', title);
+    logInfo.append('description', description);
+    logInfo.append('goal_id', goal_id);
+
+    try {
+        const response = await fetch(`/add_log/${goal_id}`, {
+            method: 'POST',
+            body: logInfo
+        })
+
+        if (!response.ok){
+            alert (`HTTP Error: ${response.status}`);
+            return;
+        }
+
+        location.reload();
 
     } catch (error) {
         alert (error);
