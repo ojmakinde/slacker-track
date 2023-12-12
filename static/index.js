@@ -2,11 +2,38 @@ var id_stack_delete = []
 var id_stack_edit = []
 
 function userAuth(){
-    /* use the same func to handle login/sign up user auth.
-    have the default id be "login". if the user wants to
-    create, change the id to "sign up", and have two major
-    conditionals for handling the logic */
-};
+    const form = document.getElementById('auth')
+    if (!form.checkValidity()){
+        alert("Please enter in a username and password")
+        return;
+    }
+
+    const authInfo = new FormData();
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    authInfo.append('username', username);
+    authInfo.append('password', password);
+
+    try { 
+        const response = fetch('/authentication', {
+        method: 'POST',
+        body: authInfo
+        })
+
+        response.then(responseData => {
+            return responseData.json()
+        }).then(data => {
+            if (data[0]){
+                window.location.href = `/home/${username}`
+            } else {
+                alert ('Incorrect credentials. Please try again.')
+            }
+        })
+    } catch (error) {
+        alert (error)
+    }
+}
 
 function countdown(element, start_time, end_time = null) {
 
@@ -36,7 +63,7 @@ function countdown(element, start_time, end_time = null) {
     }
     countdownString += seconds + ' seconds';
 
-    element.innerHTML = countdownString + 'since creation';
+    element.innerHTML = countdownString + ' since creation';
 
     // Unfortunately, the logic for dealing with end times could not be implemented with the time left.
 };

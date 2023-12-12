@@ -34,7 +34,7 @@ def create_goal_end_date(db, username, new_goal, new_description, start_date, en
     return (goal)
 
 def create_goal(db, username, new_goal, new_description, start_date):
-    max_id = get_max_id(db)
+    max_id = get_max_id(db, 'goals')
     goal = db.table('goals') \
              .insert({'id': max_id + 1,
                       'username': f'{username}',

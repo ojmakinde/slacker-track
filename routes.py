@@ -13,19 +13,13 @@ def auth_page():
     return render_template('auth_page.html')
 
 @app.route("/authentication", methods=['POST'])
-def handle_log(username, password):
+def auth():
     username = request.form.get('username')
     password = request.form.get('password')
 
-    verification = logic.verify(db, username, password)
-    action = request.form.get('action')
-    if action == 'delete':
-        log = logic.delete_log(database, log_id)
-    elif action == 'edit':
-        title, description = request.form.get('title'), request.form.get('description')
-        log = logic.edit_log(database, log_id, title, description)
+    verification = logic.verify(database, username, password)
 
-    return (log)
+    return (verification)
 
 @app.route("/home/<user>")
 def landing_page(user):
