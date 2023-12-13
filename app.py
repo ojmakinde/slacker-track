@@ -10,7 +10,6 @@ database: Client = create_client(os.environ.get("SUPABASE_URL"), os.environ.get(
 
 @app.route("/")
 def auth_page():
-    return "<p> Work! </p>"
     return render_template('auth_page.html')
 
 @app.route("/authentication", methods=['POST'])
